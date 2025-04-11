@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitaler Reifegrad</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-image: url('https://fakturdigital.de/wp-content/uploads/2021/05/Vorteile-Digitalisierung-Digitale-Tools.png');}
+        .category { margin-bottom: 20px; }
+        .question { margin: 10px 0; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Fragebogen: Digitaler Reifegrad</h1>
+    <form id="surveyForm">
+        <div class="category" id="categories"></div>
+        <button type="button" onclick="calculateScore()">Auswerten</button>
+    </form>
+    <div class="result" id="result"></div>
+	
+   <script>
+        const questions = {
+            "Digitale Resilienz": [
+                "Wie gut ist Ihr Unternehmen in der Lage, auf digitale Bedrohungen zu reagieren und sie fr&uuml;hzeitig zu erkennen?",
+				"Wie aktiv steuert Ihr Unternehmen die Abh&auml;ngigkeiten in digitalen &Ouml;kosystemen und Partnerschaften?",
+				"Welche Rolle spielt Datenschutz in Ihrem Unternehmen? Wird er proaktiv oder strategisch umgesetzt?",
+				"Inwiefern &uuml;berwacht und verbessert Ihr Unternehmen aktiv die Datenintegrit&auml;t und &ndash;qualit&auml;t?",
+				"Wie ausgepr&auml;gt ist das IT- und Cybersecurity-Wissen der Mitarbeitenden und wie wird es gef&ouml;rdert?"
+            ],
+            "Datenmanagement": [
+                "In welchem Umfang betreibt Ihr Unternehmen ein strukturiertes, unternehmensweites Datenmanagement?",
+				"Wie systematisch und in Echtzeit sind Ihre Datenquellen dokumentiert, integriert und &uuml;berwacht?",
+				"Wie strukturiert und automatisiert erfolgt die Kategorisierung von Daten in Ihrem Unternehmen?",
+				"Wie klar definiert und im Unternehmen verankert ist Ihre Datenstrategie &ndash; und welche Verantwortlichkeiten sind daf&uuml;r festgelegt?",
+				"Wie stark sind Ihre Datenvisualisierungen auf die Bed&uuml;rfnisse der Nutzer zugeschnitten und technologisch fortgeschritten?",
+				"Wie nutzen Sie Datenanalyse zur proaktiven Entscheidungsfindung im Unternehmen?",
+				"Wie skalierbar, integriert und flexibel ist ihre Datenarchitektur, um Ihre Unternehmensstrategie optimal zu unterst&uuml;tzen?",
+				"Wie gut ist der unternehmensweite Zugriff auf relevante Daten geregelt &ndash; sind Informationen f&uuml;r alle berechtigten Mitarbeitenden in Echtzeit verf&uuml;gbar?",
+				"Welche F&auml;higkeiten haben Ihre Mitarbeitenden im Umgang mit Datenanalyse, Automatisierung und Tools?"
+            ],
+            "Technologie": [
+                "Wie stark sind moderne Technologien in Ihre Gesch&auml;ftsprozesse integriert und wie werden diese zur Prozessoptimierung genutzt?",
+				"Wie systematisch identifiziert, bewertet und integriert Ihr Unternehmen neue Technologien zur F&ouml;rderung von Innovation und Wettbewerbsf&auml;higkeit?",
+				"Wie zentral ist Business Intelligence f&uuml;r Ihre strategischen Entscheidungen, und wie integriert ist Ihr BI-System?",
+				"Inwieweit sind Business-Apps in die Gesch&auml;ftsprozesse Ihres Unternehmens integriert und tragen sie messbar zur Effizienz, Flexibilit&auml;t und Innovation bei?",
+				"In welchem Umfang nutzt Ihr Unternehmen digitale Werkzeuge zur Prozessautomatisierung und &ndash;optimierung in allen Gesch&auml;ftsbereichen?",
+				"In welchem Ausma&szlig; nutzt Ihr Unternehmen Plattformtechnologien zur Integration von Systemen und Daten?",
+				"Wie stark ist K&uuml;nstliche Intelligenz in Ihre Gesch&auml;ftsstrategie integriert, und wie ver&auml;ndert sie Ihre Prozesse?",
+				"Wie gut sind Ihre Mitarbeitenden &uuml;ber neue Technologien informiert und in der Lage, diese effektiv zu nutzen?"
+            ],
+			"Digitale Kommunikation und Kollaboration": [
+				"Wie digital, integriert und effizient sind die Kommunikations- und Kollaborationsprozesse in Ihrem Unternehmen gestaltet?",
+				"Wie effektiv und technologiegest&uuml;tzt sind Ihre digitalen Besprechungen organisiert?",
+				"Wie interaktiv und kollaborativ wird das Intranet in Ihrem Unternehmen genutzt?",
+				"Welche Rolle spielen Enterprise Social Networks (ESN) f&uuml;r die interne und externe Kommunikation?",
+				"In welchem Umfang nutzt Ihr Unternehmen Chatbots und KI zur Unterst&uuml;tzung oder Automatisierung von Kommunikations- und Gesch&auml;ftsprozessen?",
+				"Wie kompetent und anpassungsf&auml;hig sind Ihre Mitarbeitenden im Umgang mit digitalen Tools zur Kommunikation und Zusammenarbeit?"
+			],
+        };
+
+        function generateForm() {
+            const categoriesDiv = document.getElementById("categories");
+            for (let category in questions) {
+                let categoryDiv = document.createElement("div");
+                categoryDiv.classList.add("category");
+                let categoryTitle = document.createElement("h3");
+                categoryTitle.innerHTML = category;  // Umlaute korrekt anzeigen
+                categoryDiv.appendChild(categoryTitle);
+                questions[category].forEach((q, index) => {
+                    let questionDiv = document.createElement("div");
+                    questionDiv.classList.add("question");
+                    questionDiv.innerHTML = `<label>${q}</label>
+                        <select name="${category}_${index}">
+                            <option value="1">1 - Gar nicht</option>
+                            <option value="2">2 - Wenig</option>
+                            <option value="3">3 - Mittel</option>
+                            <option value="4">4 - Gut</option>
+                            <option value="5">5 - Vollst&auml;ndig</option>
+                        </select>`;
+                    categoryDiv.appendChild(questionDiv);
+                });
+                categoriesDiv.appendChild(categoryDiv);
+            }
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            let totalQuestions = 0;
+            const formElements = document.forms["surveyForm"].elements;
+            for (let element of formElements) {
+                if (element.tagName === "SELECT") {
+                    totalScore += parseInt(element.value);
+                    totalQuestions++;
+                }
+            }
+            let avgScore = (totalScore / totalQuestions).toFixed(2);
+            document.getElementById("result").innerHTML = `Ihr digitaler Reifegrad betr&auml;gt: <strong>${avgScore}</strong> / 5`;
+        }
+
+        generateForm();
+    </script>
+</body>
+</html>
+
