@@ -12,6 +12,43 @@
         .result { margin-top: 20px; font-weight: bold; }
     </style>
 </head>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    (function() {
+        emailjs.init("DUAY4Fjxh-IcswPxg"); // <-- Ersetze hier!
+    })();
+    function calculateScore() {
+        let totalScore = 0;
+        let totalQuestions = 0;
+        const formElements = document.forms["surveyForm"].elements;
+        let resultData = {
+            resilienz: "",
+            daten: "",
+            tech: "",
+            kom: ""
+        };
+        for (let element of formElements) {
+            if (element.tagName === "SELECT") {
+                totalScore += parseInt(element.value);
+                totalQuestions++;
+                const cat = element.name.split("_")[0].toLowerCase();
+                if (resultData[cat] !== undefined) {
+                    resultData[cat] += element.value + ",";
+                }
+            }
+        }
+        resultData.avg = (totalScore / totalQuestions).toFixed(2);
+        document.getElementById("result").innerHTML = `Ihr digitaler Reifegrad beträgt: <strong>${resultData.avg}</strong> / 5`;
+
+        // Mail senden
+        emailjs.send("service_fcq7juh", "service_fcq7juh", resultData)
+        .then(() => {
+            alert("Ergebnisse wurden per E-Mail verschickt!");
+        }, (error) => {
+            alert("Fehler beim Senden: " + JSON.stringify(error));
+        });
+    }
+</script>
 <body>
     <h1>Fragebogen: Digitaler Reifegrad eines Unternehmens</h1>
     <form id="surveyForm">
