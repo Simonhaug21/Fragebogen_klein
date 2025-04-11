@@ -6,14 +6,14 @@
     <title>Digitaler Reifegrad</title>
     <style>
         body {font-family: Arial, sans-serif; margin: 20px; position: relative; z-index: 0; }
-		body::before { content: ""; position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; background-image: url('https://fakturdigital.de/wp-content/uploads/2021/05/Vorteile-Digitalisierung-Digitale-Tools.png'); background-size: cover; background-position: center; opacity: 0.3; z-index: -1; }
+		body::before { content: ""; position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; background-image: url('https://fakturdigital.de/wp-content/uploads/2021/05/Vorteile-Digitalisierung-Digitale-Tools.png'); background-size: cover; background-position: center; opacity: 0.4; z-index: -1; }
         .category { margin-bottom: 20px; }
         .question { margin: 10px 0; }
         .result { margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Fragebogen: Digitaler Reifegrad</h1>
+    <h1>Fragebogen: Digitaler Reifegrad eines Unternehmens</h1>
     <form id="surveyForm">
         <div class="category" id="categories"></div>
         <button type="button" onclick="calculateScore()">Auswerten</button>
@@ -22,12 +22,12 @@
 	
    <script>
         const questions = {
-            "Digitale Resilienz": [
-                "Wie gut ist Ihr Unternehmen in der Lage, auf digitale Bedrohungen zu reagieren und sie fr&uuml;hzeitig zu erkennen?",
-				"Wie aktiv steuert Ihr Unternehmen die Abh&auml;ngigkeiten in digitalen &Ouml;kosystemen und Partnerschaften?",
-				"Welche Rolle spielt Datenschutz in Ihrem Unternehmen? Wird er proaktiv oder strategisch umgesetzt?",
-				"Inwiefern &uuml;berwacht und verbessert Ihr Unternehmen aktiv die Datenintegrit&auml;t und &ndash;qualit&auml;t?",
-				"Wie ausgepr&auml;gt ist das IT- und Cybersecurity-Wissen der Mitarbeitenden und wie wird es gef&ouml;rdert?"
+            "Strategie & F&uuml;hrung": [
+                "1.	Gibt es eine klar definierte digitale Strategie?",
+				"2.	Wird die digitale Transformation aktiv von der Geschäftsführung unterstützt?",
+				"3.	Sind klare digitale Ziele und KPIs definiert?",
+				"4.	Wird regelmäßig evaluiert, ob die digitale Strategie erfolgreich ist?",
+				"5.	Gibt es eine Budgetierung speziell für digitale Initiativen?"
             ],
             "Datenmanagement": [
                 "In welchem Umfang betreibt Ihr Unternehmen ein strukturiertes, unternehmensweites Datenmanagement?",
